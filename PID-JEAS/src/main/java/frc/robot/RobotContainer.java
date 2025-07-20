@@ -7,12 +7,18 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveManuallyCommand;
+import frc.robot.commands.DriveSingleMotorCommand;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.OneMeterForward;
+import frc.robot.commands.StopRobot;
+import frc.robot.commands.StopSingleMotorCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.SmartDashboardSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
@@ -30,16 +36,20 @@ public class RobotContainer {
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
   public static Joystick joystick = new Joystick(1);
   public static DriveSubsystem driveSubsystem = new DriveSubsystem();
+  public static SmartDashboardSubsystem smartDashboardSubsystem = new SmartDashboardSubsystem();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
 
+    
+
     driveSubsystem.setDefaultCommand(
       new DriveManuallyCommand(
-      ()->joystick.getX(),
-      ()->joystick.getY()
+      ()->joystick.getX()
+      ,
+      ()->joystick.getY()*-1
     ));
   }
 
@@ -54,12 +64,17 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
-
+    // new Trigger(m_exampleSubsystem::exampleCondition)
+    //     .onTrue(new ExampleCommand(m_exampleSubsystem));
+    // new JoystickButton(joystick, 1)
+    //     .onTrue(new DriveSingleMotorCommand())
+    //     .onFalse(new StopSingleMotorCommand());
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    new JoystickButton(joystick, 11)
+        .onTrue(new OneMeterForward())
+        .onFalse(new StopRobot());
   }
 
   /**

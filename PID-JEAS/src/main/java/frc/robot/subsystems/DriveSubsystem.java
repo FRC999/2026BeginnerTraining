@@ -22,6 +22,7 @@ public class DriveSubsystem extends SubsystemBase {
   public static SparkMaxConfig configRight = new SparkMaxConfig();
   public static SparkMaxConfig configLeft = new SparkMaxConfig();
 
+
   public DriveSubsystem() {
     leftMotor = new SparkMax(54, MotorType.kBrushless);
     rightMotor = new SparkMax(57, MotorType.kBrushless);
@@ -31,7 +32,7 @@ public class DriveSubsystem extends SubsystemBase {
      configRight.inverted(true);
      rightMotor.configure(configRight, SparkBase.ResetMode.kResetSafeParameters, SparkBase.PersistMode.kPersistParameters);
 
-    chassis = new DifferentialDrive(leftMotor, rightMotor);
+    chassis = new DifferentialDrive(rightMotor, leftMotor);
   }
 
   public void robotDrive(double moveX, double moveY){
@@ -41,6 +42,14 @@ public class DriveSubsystem extends SubsystemBase {
   // public static double getMotorVoltage() {
   //   return leftMotor.getAppliedOutput();
   // }
+
+  public void runSingleMotor(){
+    rightMotor.set(.3);
+  }
+
+  public void stopSingleMotor(){
+    rightMotor.set(0);
+  }
 
   @Override
   public void periodic() {

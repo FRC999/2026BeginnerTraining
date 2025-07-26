@@ -9,6 +9,8 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.DriveSingleMotorCommand;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.MoveRobotCommand;
+import frc.robot.commands.MoveRobotInstantCommand;
 import frc.robot.commands.OneMeterForward;
 import frc.robot.commands.StopRobot;
 import frc.robot.commands.StopSingleMotorCommand;
@@ -75,6 +77,11 @@ public class RobotContainer {
     new JoystickButton(joystick, 11)
         .onTrue(new OneMeterForward())
         .onFalse(new StopRobot());
+
+    new JoystickButton(joystick, 10)
+        .onTrue(new MoveRobotCommand())
+        .onFalse(new StopRobot());
+
   }
 
   /**

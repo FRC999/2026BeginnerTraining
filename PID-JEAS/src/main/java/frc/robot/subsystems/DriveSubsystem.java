@@ -24,8 +24,8 @@ public class DriveSubsystem extends SubsystemBase {
 
 
   public DriveSubsystem() {
-    leftMotor = new SparkMax(54, MotorType.kBrushless);
-    rightMotor = new SparkMax(57, MotorType.kBrushless);
+    leftMotor = new SparkMax(57, MotorType.kBrushless);
+    rightMotor = new SparkMax(54, MotorType.kBrushless);
     configRight.idleMode(IdleMode.kBrake);
     configLeft.idleMode(IdleMode.kBrake);
      leftMotor.configure(configLeft, SparkBase.ResetMode.kResetSafeParameters, SparkBase.PersistMode.kPersistParameters);

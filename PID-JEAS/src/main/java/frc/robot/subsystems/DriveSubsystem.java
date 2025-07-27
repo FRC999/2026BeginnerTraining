@@ -10,9 +10,13 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.util.sendable.SendableRegistry;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+import frc.robot.RobotContainer;
 
 public class DriveSubsystem extends SubsystemBase {
   /** Creates a new DriveSubsystem. */
@@ -33,22 +37,23 @@ public class DriveSubsystem extends SubsystemBase {
      rightMotor.configure(configRight, SparkBase.ResetMode.kResetSafeParameters, SparkBase.PersistMode.kPersistParameters);
 
     chassis = new DifferentialDrive(rightMotor, leftMotor);
+    chassis.setSafetyEnabled(false);
   }
 
   public void robotDrive(double moveX, double moveY){
     chassis.arcadeDrive(moveX, moveY);
   }
 
-  // public static double getMotorVoltage() {
-  //   return leftMotor.getAppliedOutput();
-  // }
-
-  public void runSingleMotor(){
-    rightMotor.set(.3);
+  public void runMotors(){
+    rightMotor.set(.58);
+    leftMotor.set(.58);
+    double leftEncoder = RobotContainer.driveSubsystem.leftMotor.getEncoder().getPosition(); // Gets values to move at
+    System.out.println("Encoder: " + leftEncoder);
   }
 
-  public void stopSingleMotor(){
+  public void stopMotors(){
     rightMotor.set(0);
+    leftMotor.set(0);
   }
 
   @Override

@@ -40,7 +40,7 @@ public class DriveSubsystem extends SubsystemBase {
     chassis.setSafetyEnabled(false);
   }
 
-  public void robotDrive(double moveX, double moveY){
+  public void robotDrive(double moveX, double moveY) {
     chassis.arcadeDrive(moveX, moveY);
   }
 

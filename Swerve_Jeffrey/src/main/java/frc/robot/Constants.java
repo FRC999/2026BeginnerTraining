@@ -45,7 +45,8 @@ import edu.wpi.first.units.measure.Voltage;
 public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
-
+  }
+  
     public static final class SwerveConstants {
       public static final double MaxSpeed = 5.21; // m/s
       public static final double MaxAngularRate = 4.71238898038469; // rad/s
@@ -177,4 +178,3 @@ public final class Constants {
 
   }
 
-}

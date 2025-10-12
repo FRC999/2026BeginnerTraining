@@ -4,7 +4,11 @@
 
 package frc.robot.subsystems;
 
+import static edu.wpi.first.units.Units.Inches;
+import static edu.wpi.first.units.Units.Rotations;
+
 import com.ctre.phoenix6.hardware.CANcoder;
+import com.ctre.phoenix6.hardware.Pigeon2;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.swerve.SwerveDrivetrain;
 import com.ctre.phoenix6.swerve.SwerveDrivetrainConstants;
@@ -12,16 +16,62 @@ import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.Constants.SwerveConstants;
 import frc.robot.Constants.SwerveConstants.SwerveModConstantsRecords;
 
 public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> implements Subsystem {
   /** Creates a new DriveSubsystem. */
-  public DriveSubsystem(SwerveDrivetrainConstants drivetrainConstants,
-      SwerveModuleConstants<?, ?, ?>... modules) {
-    super(
+  Pigeon2 imu;
+
+  public static DriveSubsystem driveTrain() {
+    return new DriveSubsystem(
+      SwerveConstants.DrivetrainConstants,
+      SwerveConstants.ConstantCreator.createModuleConstants(
+        SwerveConstants.MOD0.angleMotorID(), 
+        SwerveConstants.MOD0.driveMotorID(),
+        SwerveConstants.MOD0.cancoderID(), 
+        Rotations.of(SwerveConstants.MOD0.angleOffset()), 
+        Inches.of(10.335), Inches.of(10.335), 
+        SwerveConstants.MOD0.driveMotorInverted(),
+        SwerveConstants.MOD0.angleMotorInverted(),
+        SwerveConstants.MOD0.cancoderInverted()),
+      SwerveConstants.ConstantCreator.createModuleConstants(
+        SwerveConstants.MOD1.angleMotorID(), 
+        SwerveConstants.MOD1.driveMotorID(),
+        SwerveConstants.MOD1.cancoderID(), 
+        Rotations.of(SwerveConstants.MOD1.angleOffset()), 
+        Inches.of(10.335), Inches.of(10.335), 
+        SwerveConstants.MOD1.driveMotorInverted(),
+        SwerveConstants.MOD1.angleMotorInverted(),
+        SwerveConstants.MOD1.cancoderInverted()),
+      SwerveConstants.ConstantCreator.createModuleConstants(
+        SwerveConstants.MOD2.angleMotorID(), 
+        SwerveConstants.MOD2.driveMotorID(),
+        SwerveConstants.MOD2.cancoderID(), 
+        Rotations.of(SwerveConstants.MOD2.angleOffset()), 
+        Inches.of(10.335), Inches.of(10.335), 
+        SwerveConstants.MOD2.driveMotorInverted(),
+        SwerveConstants.MOD2.angleMotorInverted(),
+        SwerveConstants.MOD2.cancoderInverted()), 
+      SwerveConstants.ConstantCreator.createModuleConstants(
+        SwerveConstants.MOD3.angleMotorID(), 
+        SwerveConstants.MOD3.driveMotorID(),
+        SwerveConstants.MOD3.cancoderID(), 
+        Rotations.of(SwerveConstants.MOD3.angleOffset()), 
+        Inches.of(10.335), Inches.of(10.335), 
+        SwerveConstants.MOD3.driveMotorInverted(),
+        SwerveConstants.MOD3.angleMotorInverted(),
+        SwerveConstants.MOD3.cancoderInverted()));
+  }
+
+  public DriveSubsystem( 
+            SwerveDrivetrainConstants drivetrainConstants,
+            SwerveModuleConstants<?, ?, ?>... modules) {
+    super( 
         TalonFX::new, TalonFX::new, CANcoder::new,
         drivetrainConstants, modules);
     CommandScheduler.getInstance().registerSubsystem(this);
+    imu = this.getPigeon2();
   }
   
   @Override

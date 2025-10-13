@@ -13,6 +13,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.swerve.SwerveDrivetrain;
 import com.ctre.phoenix6.swerve.SwerveDrivetrainConstants;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
+import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Subsystem;
@@ -22,6 +23,10 @@ import frc.robot.Constants.SwerveConstants.SwerveModConstantsRecords;
 public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> implements Subsystem {
   /** Creates a new DriveSubsystem. */
   Pigeon2 imu;
+
+  // Someone explain what this does
+   private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
+      .withDeadband(SwerveConstants.MaxSpeed * SwerveConstants.DeadbandRatioLinear).withRotationalDeadband(SwerveConstants.MaxAngularRate * SwerveConstants.DeadbandRatioAngular); // Add a 10% deadband;
 
   public static DriveSubsystem driveTrain() {
     return new DriveSubsystem(
@@ -72,6 +77,18 @@ public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder>
         drivetrainConstants, modules);
     CommandScheduler.getInstance().registerSubsystem(this);
     imu = this.getPigeon2();
+  }
+
+  // Completely no idea what this does, someone pls help review
+  public void drive(double xVelocity_m_per_s, double yVelocity_m_per_s, double omega_rad_per_s) {
+    //System.out.println("X: " + xVelocity_m_per_s + " y: " + yVelocity_m_per_s + " o:" + omega_rad_per_s/SwerveChassis.MaxAngularRate);
+    //SmartDashboard.putString("Manual Drive Command Velocities","X: " + xVelocity_m_per_s + " y: " + yVelocity_m_per_s + " o:" + omega_rad_per_s);
+    this.setControl(
+      drive.withVelocityX(xVelocity_m_per_s)
+        .withVelocityY(yVelocity_m_per_s)
+        .withRotationalRate(omega_rad_per_s)
+    );
+    // previousOmegaRotationCommand = omega_rad_per_s / SwerveChassis.MaxAngularRate;
   }
   
   @Override

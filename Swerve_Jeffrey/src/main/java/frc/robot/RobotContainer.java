@@ -6,8 +6,16 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
+import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
+
+import java.lang.ModuleLayer.Controller;
+
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -21,17 +29,51 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  
+
+  public static final DriveSubsystem driveSubsystem = DriveSubsystem.driveTrain();  
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  // Creating an xbox controller for swerveDriveTrain
+  public static Controller xboxDriveController;
+
+  public static boolean isAllianceRed = false;
+
+
   public RobotContainer() {
-    // Configure the trigger bindings
-    configureBindings();
+    driveSubsystem.setDefaultCommand(
+      new DriveManuallyCommand(
+          () -> getDriverXAxis(),
+          () -> getDriverYAxis(),
+          () -> getDriverOmegaAxis()));
   }
+
+
+
+  public void checkIfAllianceIsRed() {
+    var alliance = DriverStation.getAlliance();
+    isAllianceRed = alliance.get() == DriverStation.Alliance.Red;
+  }
+
+     // Driver preferred controls
+     private double getDriverXAxis() {
+      return -m_driverController.getLeftY();
+      //return -xboxDriveController.getRightStickY();
+    }
+  
+    private double getDriverYAxis() {
+      return -m_driverController.getLeftX();
+      //return -xboxDriveController.getRightStickX();
+    }
+  
+    private double getDriverOmegaAxis() {
+      //return -xboxController.getLeftStickOmega();
+      //return -xboxDriveController.getLeftStickX();
+      return -m_driverController.getRightX();
+    }
+
 
   /**
    * Use this method to define your trigger->command mappings. Triggers can be created via the

@@ -25,6 +25,6 @@ public class UltrasonicSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Ultrasonic: ", UltrasonicSubsystem.getDistance());  
+    SmartDashboard.putNumber("Ultrasonic: ", getDistance());  
   }
 }

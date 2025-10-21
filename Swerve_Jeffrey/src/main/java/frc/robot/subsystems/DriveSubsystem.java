@@ -15,6 +15,7 @@ import com.ctre.phoenix6.swerve.SwerveDrivetrainConstants;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 
+import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Subsystem;
@@ -23,6 +24,10 @@ import frc.robot.Constants.SwerveConstants;
 public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> implements Subsystem {
   /** Creates a new DriveSubsystem. */
   Pigeon2 imu;
+
+  // Someone explain what this does
+   private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
+      .withDeadband(SwerveConstants.MaxSpeed * SwerveConstants.DeadbandRatioLinear).withRotationalDeadband(SwerveConstants.MaxAngularRate * SwerveConstants.DeadbandRatioAngular); // Add a 10% deadband;
 
     private final com.ctre.phoenix6.swerve.SwerveRequest.FieldCentric drive = new com.ctre.phoenix6.swerve.SwerveRequest.FieldCentric()
             .withDeadband(SwerveConstants.MaxSpeed * SwerveConstants.DeadbandRatioLinear)
@@ -82,17 +87,14 @@ public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder>
 
   // Completely no idea what this does, someone pls help review
   public void drive(double xVelocity_m_per_s, double yVelocity_m_per_s, double omega_rad_per_s) {
-    
-     this.setControl(
+    //System.out.println("X: " + xVelocity_m_per_s + " y: " + yVelocity_m_per_s + " o:" + omega_rad_per_s/SwerveChassis.MaxAngularRate);
+    //SmartDashboard.putString("Manual Drive Command Velocities","X: " + xVelocity_m_per_s + " y: " + yVelocity_m_per_s + " o:" + omega_rad_per_s);
+    this.setControl(
       drive.withVelocityX(xVelocity_m_per_s)
         .withVelocityY(yVelocity_m_per_s)
         .withRotationalRate(omega_rad_per_s)
     );
     // previousOmegaRotationCommand = omega_rad_per_s / SwerveChassis.MaxAngularRate;
-  }
-
-  public void stopRobot(){
-    drive(0,0,0);
   }
   
   @Override

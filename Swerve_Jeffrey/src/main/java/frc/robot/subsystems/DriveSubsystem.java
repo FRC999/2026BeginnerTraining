@@ -25,10 +25,6 @@ public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder>
   /** Creates a new DriveSubsystem. */
   Pigeon2 imu;
 
-  // Someone explain what this does
-   private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-      .withDeadband(SwerveConstants.MaxSpeed * SwerveConstants.DeadbandRatioLinear).withRotationalDeadband(SwerveConstants.MaxAngularRate * SwerveConstants.DeadbandRatioAngular); // Add a 10% deadband;
-
     private final com.ctre.phoenix6.swerve.SwerveRequest.FieldCentric drive = new com.ctre.phoenix6.swerve.SwerveRequest.FieldCentric()
             .withDeadband(SwerveConstants.MaxSpeed * SwerveConstants.DeadbandRatioLinear)
             .withRotationalDeadband(SwerveConstants.MaxAngularRate * SwerveConstants.DeadbandRatioAngular)

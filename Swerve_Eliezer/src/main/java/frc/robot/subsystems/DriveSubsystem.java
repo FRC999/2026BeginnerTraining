@@ -7,27 +7,28 @@ package frc.robot.subsystems;
 import static edu.wpi.first.units.Units.Inches;
 import static edu.wpi.first.units.Units.Rotations;
 
+import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.swerve.SwerveDrivetrain;
 import com.ctre.phoenix6.swerve.SwerveDrivetrainConstants;
-import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
-
+import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.Constants;
 import frc.robot.Constants.SwerveConstants;
 
 public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> implements Subsystem {
   /** Creates a new DriveSubsystem. */
   Pigeon2 imu;
 
-    private final com.ctre.phoenix6.swerve.SwerveRequest.FieldCentric drive = new com.ctre.phoenix6.swerve.SwerveRequest.FieldCentric()
+  private final com.ctre.phoenix6.swerve.SwerveRequest.FieldCentric drive = new com.ctre.phoenix6.swerve.SwerveRequest.FieldCentric()
             .withDeadband(SwerveConstants.MaxSpeed * SwerveConstants.DeadbandRatioLinear)
             .withRotationalDeadband(SwerveConstants.MaxAngularRate * SwerveConstants.DeadbandRatioAngular)
-            .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Will not check if got to location
+            .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
 
   public static DriveSubsystem driveTrain() {
     return new DriveSubsystem(
@@ -80,21 +81,13 @@ public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder>
     imu = this.getPigeon2();
   }
 
-  // Completely no idea what this does, someone pls help review
-  public void drive(double xVelocity_m_per_s, double yVelocity_m_per_s, double omega_rad_per_s) {
-    
-     this.setControl(
-      drive.withVelocityX(xVelocity_m_per_s)
-        .withVelocityY(yVelocity_m_per_s)
-        .withRotationalRate(omega_rad_per_s)
-    );
-    // previousOmegaRotationCommand = omega_rad_per_s / SwerveChassis.MaxAngularRate;
-  }
+  public void drive(double xVelocity_mps, double yVelocity_mps, double omega_rps){
+    this.setControl(
+      drive.withVelocityX(xVelocity_mps)
+        .withVelocityY(yVelocity_mps)
+        .withRotationalRate(omega_rps));
+  } 
 
-  public void stopRobot(){
-    drive(0,0,0);
-  }
-  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

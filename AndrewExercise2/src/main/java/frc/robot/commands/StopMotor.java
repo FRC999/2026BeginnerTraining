@@ -12,6 +12,7 @@ import frc.robot.RobotContainer;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class StopMotor extends InstantCommand {
   public StopMotor() {
+    addRequirements(RobotContainer.motorSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

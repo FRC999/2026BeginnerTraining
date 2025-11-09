@@ -44,7 +44,7 @@ import edu.wpi.first.units.measure.Voltage;
  */
 public final class Constants {
   public static class OperatorConstants {
-    public static final int kDriverControllerPort = 0;
+    public static final int kDriverControllerPort = 5;
   }
 
   public static final class SwerveConstants {

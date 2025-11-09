@@ -6,7 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
+import com.ctre.phoenix6.controls.Follower;
 import com.revrobotics.jni.CANSparkJNI;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.PersistMode;
@@ -16,6 +16,7 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
 
 public class MotorSubsystem extends SubsystemBase {
   /** Creates a new MotorSubsystem. */
@@ -29,16 +30,31 @@ public class MotorSubsystem extends SubsystemBase {
     configureMotor();
   }
   private void configureMotor() {
-    var followerConfig = new SparkMaxConfig();
+
+    var leadConfig = new SparkMaxConfig();
+    var followConfig = new SparkMaxConfig();
     //followerConfig.follow(m_leadMotor);
-    m_followMotor.configure(followerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    m_leadMotor.configure(leadConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    followConfig.follow(54);
+    m_followMotor.configure(followConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
   }
 
+  public static double clamp(double value, double min, double max) {
+    if (value < min) {
+        return min;
+    } else if (value > max) {
+        return max;
+    } else {
+        return value;
+    }
+}
+
   public void startMotor() {
-    System.out.println("**running motor");
-    m_leadMotor.set(0.3);
+    //System.out.println("**running motor");
+    m_leadMotor.set(clamp(RobotContainer.joystick.getRawAxis(3), -0.5, 0.5));
     //m_leadMotor.setVoltage(6);
-    System.out.println("**test2");
+    //System.out.println("**test2");
   }
   public void stopMotor() {
     m_leadMotor.set(0);

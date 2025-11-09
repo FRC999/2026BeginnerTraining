@@ -59,10 +59,10 @@ public class RobotContainer {
       .onTrue(new StartMotor())
       .onFalse(new StopMotor());
 
-    new JoystickButton(joystick,5)
+    /*new JoystickButton(joystick,5)
       .onTrue(new ReverseStartMotor())
       .onFalse(new StopMotor());
-
+    */
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());

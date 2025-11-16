@@ -7,13 +7,14 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.ReverseStartMotor;
+import frc.robot.commands.PrintJoystickAxisDynamically;
 import frc.robot.commands.StartMotor;
 import frc.robot.commands.StopMotor;
 import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.MotorSubsystem;
+import frc.robot.subsystems.MotorSubsytem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -27,13 +28,12 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  public static final MotorSubsystem motorSubsystem = new MotorSubsystem();
+  public static MotorSubsytem motorSystem = new MotorSubsytem();
+  public static Joystick extreme30Joystick = new Joystick(0); // 0 is the USB Port to be used as indicated on the Driver Station
+
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
-
-  public static final Joystick joystick = new Joystick(0);
-  
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -55,17 +55,21 @@ public class RobotContainer {
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
 
-    new JoystickButton(joystick, 6)
-      .onTrue(new StartMotor())
-      .onFalse(new StopMotor());
-
-    /*new JoystickButton(joystick,5)
-      .onTrue(new ReverseStartMotor())
-      .onFalse(new StopMotor());
-    */
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+
+    JoystickButton button1 = new JoystickButton(extreme30Joystick, 1); // Creates a new JoystickButton object for button 1 on extreme30Joystick
+    button1.whileTrue(new PrintCommand("Congratulations! You pressed the trigger!!!!!;)"));
+    button1.onFalse(new PrintCommand("Congratulations! You released the trigger!!!!!;)"));
+
+    JoystickButton button2 = new JoystickButton(extreme30Joystick, 2); // Creates a new JoystickButton object for button 1 on extreme30Joystick
+    button2.onTrue(new PrintJoystickAxisDynamically());
+
+    JoystickButton button3 = new JoystickButton(extreme30Joystick, 3);
+    button3.onTrue(new StartMotor())
+      .onFalse(new StopMotor());
+
   }
 
   /**

@@ -53,7 +53,7 @@ public final class Constants {
     public static final double DeadbandRatioLinear = 0.05; // determined by calibration method
     public static final double DeadbandRatioAngular = 0.05; // determined by calibration method
 
-    public static final CANBus kCANBus = new CANBus("", "./logs/example.hoot");
+    public static final CANBus kCANBus = new CANBus("canivore1", "./logs/example.hoot");
     public static final Pigeon2Configuration pigeonConfigs = null;
     public static final Slot0Configs steerGains = new Slot0Configs()
         .withKP(100).withKI(0).withKD(0.5)
@@ -120,40 +120,52 @@ public final class Constants {
         .withPigeon2Configs(pigeonConfigs);
 
  /** Module wiring and offsets: MOD0..MOD3 */
-      public static record SwerveModConstantsRecords(int driveMotorID, int angleMotorID, int cancoderID, double angleOffset,
-        boolean driveMotorInverted, boolean angleMotorInverted, boolean cancoderInverted) {}
+        public static record SwerveModuleConstantsRecord(int driveMotorID, int angleMotorID, int cancoderID, double angleOffset,
+          boolean driveMotorInverted, boolean angleMotorInverted, boolean cancoderInverted) {}
 
-      public static final SwerveModConstantsRecords MOD0 = new SwerveModConstantsRecords( //Top right
-        1, 
-        2, 
-        20, 
-        -0.282470578125, 
-        false, 
-        true, 
-        false);
-      public static final SwerveModConstantsRecords MOD1 = new SwerveModConstantsRecords( //Top left
-        3, 
-        4, 
-        21, 
-        0.029541015625, 
-        true, 
-        true, 
-        false);
-      public static final SwerveModConstantsRecords MOD2 = new SwerveModConstantsRecords( //Bottom right
-        5, 
-        6, 
-        22, 
-        0.317138875, 
-        false, 
-        true, 
-        false);
-      public static final SwerveModConstantsRecords MOD3 = new SwerveModConstantsRecords( //Bottom left
-        7, 
-        8, 
-        23, 
-        0.044677734375, 
-        true, 
-        true, 
-        false);
+
+          public static final SwerveModuleConstantsRecord MOD0 = new SwerveModuleConstantsRecord( // Front Left,
+          3, // driveMotorID
+          4, // angleMotorID
+          31, // CanCoder Id
+          // -0.296142578125, // angleOffset of cancoder to mark zero-position
+          0.022582890625, // angleOffset of cancoder to mark zero-position
+          false, // Inversion for drive motor
+          false, // Inversion for angle motor
+          false // inversion for CANcoder
+      );
+     
+      public static final SwerveModuleConstantsRecord MOD1 = new SwerveModuleConstantsRecord( // Front Right
+          1, // driveMotorID
+          2, // angleMotorID
+          30, // CanCoder Id
+          // 0.041015625, // angleOffset of cancoder to mark zero-position
+          -0.3797604921875, // angleOffset of cancoder to mark zero-position
+          true, // Inversion for drive motor
+          false, // Inversion for angle motor
+          false // inversion for CANcoder
+      );
+
+      public static final SwerveModuleConstantsRecord MOD2 = new SwerveModuleConstantsRecord( // Back Left
+          7, // driveMotorID
+          8, // angleMotorID
+          33, // CanCoder Id
+          // -0.296142578125, // angleOffset of cancoder to mark zero-position
+          0.421386796875, // angleOffset of cancoder to mark zero-position
+          false, // Inversion for drive motor
+          false, // Inversion for angle motor
+          false // inversion for CANcoder
+      );
+      public static final SwerveModuleConstantsRecord MOD3 = new SwerveModuleConstantsRecord( // Back Right
+          5, // driveMotorID
+          6, // angleMotorID
+          32, // CanCoder Id
+          // 0.326171875, // angleOffset of cancoder to mark zero-position
+          //0.0576171875, // angleOffset of cancoder to mark zero-position
+          0.088256890625, // angleOffset of cancoder to mark zero-position
+          true, // Inversion for drive motor
+          false, // Inversion for angle motor
+          false // inversion for CANcoder
+      );
   }
 }

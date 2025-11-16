@@ -6,12 +6,12 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
-import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
@@ -22,24 +22,18 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+  Joystick joystick_1 = new Joystick(0); // 0 is the USB Port to be used as indicated on the Driver Station
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
-  public static DriveSubsystem driveSubsystem = DriveSubsystem.driveTrain();
-
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
-    driveSubsystem.setDefaultCommand(
-      new DriveManuallyCommand(
-        () -> getVelocityX(),
-        () -> getVelocityY(),
-        () -> getAngularVelocity())
-    );
     configureBindings();
+    
   }
 
   /**
@@ -59,18 +53,7 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-  }
-
-  public double getVelocityX(){
-    return -m_driverController.getLeftY();
-  }
-
-  public double getVelocityY(){
-    return -m_driverController.getLeftX();
-  }
-
-  public double getAngularVelocity(){
-    return -m_driverController.getRightY();
+    JoystickButton button11 = new JoystickButton(joystick_1, 11); // Creates a new JoystickButton object for button 1 on exampleStick
   }
 
   /**

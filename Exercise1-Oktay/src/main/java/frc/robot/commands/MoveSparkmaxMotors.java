@@ -4,23 +4,26 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.RobotContainer;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class StartMotor extends InstantCommand {
-  public StartMotor() {
+public class MoveSparkmaxMotors extends InstantCommand {
+  public MoveSparkmaxMotors() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.motorSystem);     
+
+    addRequirements(RobotContainer.motorSystem);
+    
+
     
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    RobotContainer.motorSystem.startMotor();
-
-  }
+  public void initialize() {}
 }

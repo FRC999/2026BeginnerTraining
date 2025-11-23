@@ -22,6 +22,7 @@ public class MotorSubsytem extends SubsystemBase {
 
   private SparkMaxConfig motorConfig;
 
+
   /* Creates a new MotorSubsytem. */
   public MotorSubsytem() {
   

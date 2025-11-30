@@ -12,12 +12,11 @@ import frc.robot.RobotContainer;
 public class StartMotor extends InstantCommand {
   public StartMotor() {
     // Use addRequirements() here to declare subsystem dependencies.
-   addRequirements(RobotContainer.motorSubsystem);
+  addRequirements(RobotContainer.motorSubsystem);
   }
-
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
- RobotContainer.motorSubsystem.startMotor();
-}
+    RobotContainer.motorSubsystem.startMotor();
+  }
 }

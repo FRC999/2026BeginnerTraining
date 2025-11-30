@@ -11,8 +11,12 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
+import edu.wpi.first.wpilibj.Joystick;
+
 
 public class MotorSubsystem extends SubsystemBase {
+  
   /** Creates a new MotorSubsystem. */
   private SparkMax m_leadMotor;
   private SparkMax m_followMotor;
@@ -34,12 +38,17 @@ public class MotorSubsystem extends SubsystemBase {
 
   }
 
-
-
-
-
-
+  public static double clamp(double value, double min, double max) {
+    if (value < min) {
+        return min;
+    } else if (value > max) {
+        return max;
+    } else {
+        return value;
+    }
+}
   public void startMotor() {
+
     //System.out.println("**running motor");
     m_leadMotor.set(0.3);
     //m_leadMotor.setVoltage(6);
@@ -48,9 +57,9 @@ public class MotorSubsystem extends SubsystemBase {
   public void stopMotor() {
     m_leadMotor.set(0);
   }
-  public void DriveStraightMotor(){
-    
-  }
+
+ 
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

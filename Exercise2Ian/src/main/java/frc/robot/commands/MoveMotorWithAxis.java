@@ -4,44 +4,33 @@
 
 package frc.robot.commands;
 
-import java.util.function.DoubleSupplier;
-
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class DriveManuallyCommand extends Command {
-  public DoubleSupplier mX;
-  public DoubleSupplier mY;
-  public DoubleSupplier mRot;
+public class MoveMotorWithAxis extends Command {
+  /** Creates a new MoveMotorWithAxis. */
+  public MoveMotorWithAxis() {
 
-  /** Creates a new DriveManuallyCommand. */
-  public DriveManuallyCommand(DoubleSupplier x, DoubleSupplier y, DoubleSupplier rot) {
-    addRequirements(RobotContainer.driveSubsystem);
+    addRequirements(RobotContainer.motorSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
-
-    mX = x;
-    mY = y;
-    mRot = rot;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
 
-  // Called every time the s cheduler runs while the command is scheduled.
+    RobotContainer.motorSubsystem.MoveMotorsWithVariableSpeed(0);
+  }
+
+  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double xInput = mX.getAsDouble();
-    double yInput = mY.getAsDouble();
-    double rotInput = mRot.getAsDouble();
+    double AxisV = RobotContainer.ReturnYAxis();
 
-    RobotContainer.driveSubsystem.drive(
-      xInput * Constants.SwerveConstants.MaxSpeed, 
-      yInput * Constants.SwerveConstants.MaxSpeed, 
-      rotInput * Constants.SwerveConstants.MaxAngularRate
-    );
+    RobotContainer.motorSubsystem.MoveMotorsWithVariableSpeed(AxisV);
+
+    
   }
 
   // Called once the command ends or is interrupted.

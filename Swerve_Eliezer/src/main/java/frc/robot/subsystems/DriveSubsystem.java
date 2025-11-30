@@ -82,13 +82,13 @@ public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder>
   }
 
   public void drive(double xVelocity_mps, double yVelocity_mps, double omega_rps){
-    // this.setControl(
-    //   driveChassis.withVelocityX(xVelocity_mps)
-    //     .withVelocityY(yVelocity_mps)
-    //     .withRotationalRate(omega_rps));
+     this.setControl(
+       driveChassis.withVelocityX(xVelocity_mps)
+         .withVelocityY(yVelocity_mps)
+         .withRotationalRate(omega_rps));
     System.out.print("X velocity: " + xVelocity_mps);
-    System.out.print("Y velocity: " + yVelocity_mps);
-    System.out.println("Angular velocity: " + omega_rps);
+    System.out.print("  Y velocity: " + yVelocity_mps);
+    System.out.println("  Angular velocity: " + omega_rps);
   } 
 
   @Override

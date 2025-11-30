@@ -9,10 +9,10 @@ import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 import edu.wpi.first.wpilibj.Joystick;
+
 
 public class MotorSubsystem extends SubsystemBase {
   
@@ -20,12 +20,11 @@ public class MotorSubsystem extends SubsystemBase {
   private SparkMax m_leadMotor;
   private SparkMax m_followMotor;
 
-  
-
   public MotorSubsystem() {
     m_leadMotor = new SparkMax(54, MotorType.kBrushless);
     m_followMotor = new SparkMax(57, MotorType.kBrushless);
     configureMotor();
+    
   }
   private void configureMotor() {
 
@@ -33,11 +32,10 @@ public class MotorSubsystem extends SubsystemBase {
     var followConfig = new SparkMaxConfig();
     //followerConfig.follow(m_leadMotor);
     m_leadMotor.configure(leadConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    followConfig.follow(54);
+    followConfig.follow(54, true);
     m_followMotor.configure(followConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
   }
-
 
   public static double clamp(double value, double min, double max) {
     if (value < min) {
@@ -48,9 +46,9 @@ public class MotorSubsystem extends SubsystemBase {
         return value;
     }
 }
-
-
   public void startMotor() {
+
+    //System.out.println("**running motor");
     m_leadMotor.set(0.3);
     //m_leadMotor.setVoltage(6);
     //System.out.println("**test2");
@@ -58,7 +56,9 @@ public class MotorSubsystem extends SubsystemBase {
   public void stopMotor() {
     m_leadMotor.set(0);
   }
-  
+
+ 
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

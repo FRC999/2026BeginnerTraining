@@ -6,17 +6,20 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.RobotContainer;
+
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class StartMotor extends InstantCommand {
-  public StartMotor() {
+public class StopRetroceding extends InstantCommand {
+  public StopRetroceding() {
+    addRequirements(RobotContainer.motorSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
-  addRequirements(RobotContainer.motorSubsystem);
   }
+
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    RobotContainer.motorSubsystem.startMotor();
+
+    RobotContainer.motorSubsystem.StopRetroceding();
   }
 }

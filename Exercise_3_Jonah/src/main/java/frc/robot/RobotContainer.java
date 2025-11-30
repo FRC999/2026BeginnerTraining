@@ -7,16 +7,13 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.StartMotor;
-import frc.robot.commands.StopMotor;
+import frc.robot.commands.driveManually;
+import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.MotorSubsystem;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj.Joystick;
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -24,13 +21,10 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  public static final Joystick joystick = new Joystick(0);
- 
-// The robot's subsystems and commands are defined here...
+  // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  public static MotorSubsystem motorSubsystem = new MotorSubsystem();
-  public static Joystick myLeastFavoriteJoystick = new Joystick(0);
-  
+  public static DriveSubsystem driveSubsystem = new DriveSubsystem();
+  public static final Joystick joystick = new Joystick(0);
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
@@ -39,6 +33,8 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
+    
+    driveSubsystem.setDefaultCommand(getAutonomousCommand());
   }
 
   /**
@@ -53,22 +49,19 @@ public class RobotContainer {
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
+        .onTrue(new ExampleCommand());
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    
-    
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-  
-    JoystickButton button3 = new JoystickButton(myLeastFavoriteJoystick, 3);
-    button3.whileTrue(new StartMotor());
-    button3.whileFalse(new StopMotor());
-  
+  }
 
-    JoystickButton button1 = new JoystickButton(joystick, 7);
-    button1.onTrue(new StartMotor());
-    button1.onFalse(new StopMotor());
+  public static double getJoystickY() {
+    return joystick.getY();
+  }
+
+  public static double getJoystickX() {
+    return joystick.getX();
   }
 
   /**

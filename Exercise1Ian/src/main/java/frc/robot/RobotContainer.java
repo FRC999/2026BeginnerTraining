@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.ReadingSlider;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -29,7 +30,7 @@ public class RobotContainer {
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
-      Joystick joyStick1 = new Joystick(0);
+     public static Joystick joyStick1 = new Joystick(0);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -54,8 +55,15 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    JoystickButton gg2 = new JoystickButton(joyStick1, 12);
+    gg2.onTrue(new ReadingSlider());
     JoystickButton gg = new JoystickButton(joyStick1, 11);
-    gg.onTrue(new PrintCommand("Button 11 pressed));
+    gg.onTrue(new PrintCommand("Button 11 pressed"))  
+        .onFalse(new PrintCommand("Button 11 released"));
+
+        
+  
+
   }
 
   /**

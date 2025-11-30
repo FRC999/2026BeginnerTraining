@@ -62,11 +62,11 @@ public class RobotContainer {
   }
 
   public double getVelocityX(){
-    return -m_driverController.getLeftY();
+    return m_driverController.getLeftY();
   }
 
   public double getVelocityY(){
-    return -m_driverController.getLeftX();
+    return m_driverController.getLeftX();
   }
 
   public double getAngularVelocity(){

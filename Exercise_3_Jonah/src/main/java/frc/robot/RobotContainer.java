@@ -6,7 +6,6 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.driveManually;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -33,8 +32,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
-    
-    driveSubsystem.setDefaultCommand(getAutonomousCommand());
+    driveSubsystem.setDefaultCommand(new driveManually());
   }
 
   /**
@@ -48,21 +46,14 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand());
+   // new Trigger(m_exampleSubsystem::exampleCondition)
+      //  .onTrue(new ExampleCommand());
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
   }
 
-  public static double getJoystickY() {
-    return joystick.getY();
-  }
-
-  public static double getJoystickX() {
-    return joystick.getX();
-  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -73,4 +64,5 @@ public class RobotContainer {
     // An example command will be run in autonomous
     return Autos.exampleAuto(m_exampleSubsystem);
   }
+
 }

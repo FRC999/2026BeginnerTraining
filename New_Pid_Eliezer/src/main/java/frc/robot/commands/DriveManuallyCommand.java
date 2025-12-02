@@ -4,44 +4,31 @@
 
 package frc.robot.commands;
 
-import java.util.function.DoubleSupplier;
-
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.DriveSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class DriveManuallyCommand extends Command {
-  public DoubleSupplier mX;
-  public DoubleSupplier mY;
-  public DoubleSupplier mRot;
-
   /** Creates a new DriveManuallyCommand. */
-  public DriveManuallyCommand(DoubleSupplier x, DoubleSupplier y, DoubleSupplier rot) {
-    addRequirements(RobotContainer.driveSubsystem);
+  public DriveManuallyCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
-
-    mX = x;
-    mY = y;
-    mRot = rot;
+    addRequirements(RobotContainer.driveSubsystem);
   }
 
+
+  public double moveX;
+  public double moveY;
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
 
-  // Called every time the s cheduler runs while the command is scheduled.
+  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double xInput = mX.getAsDouble();
-    double yInput = mY.getAsDouble();
-    double rotInput = mRot.getAsDouble();
-
-    RobotContainer.driveSubsystem.drive(
-      xInput * Constants.SwerveConstants.MaxSpeed, 
-      yInput * Constants.SwerveConstants.MaxSpeed, 
-      rotInput * Constants.SwerveConstants.MaxAngularRate
-    );
+    moveX = RobotContainer.joystick.getX();
+    moveY = RobotContainer.joystick.getY();
+    RobotContainer.driveSubsystem.move(moveX, moveY);
   }
 
   // Called once the command ends or is interrupted.

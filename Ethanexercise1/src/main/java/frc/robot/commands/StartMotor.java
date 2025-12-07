@@ -11,10 +11,11 @@ import frc.robot.subsystems.MotorSubsystem;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class StartMotor extends InstantCommand {
-  private final MotorSubsystem m_subsystem;
   public StartMotor() {
+    addRequirements(RobotContainer.m_MotorSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
+  
 
   // Called when the command is initially scheduled.
   @Override

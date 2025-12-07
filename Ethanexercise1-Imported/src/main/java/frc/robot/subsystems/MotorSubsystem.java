@@ -26,7 +26,7 @@ public class MotorSubsystem extends SubsystemBase {
     var leadConfig = new SparkMaxConfig();
     var followConfig = new SparkMaxConfig();
     m_leadMotor.configure(leadConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    followConfig.follow(54);
+    followConfig.follow(m_leadMotor);
     m_followMotor.configure(followConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
   }
@@ -36,7 +36,7 @@ public class MotorSubsystem extends SubsystemBase {
   }
   public void stopMotor()
   {
-    m_leadMotor.set(0.5);
+    m_leadMotor.set(0.0);
   }
   @Override
   public void periodic() {

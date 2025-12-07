@@ -34,6 +34,7 @@ public class MotorSubsystem extends SubsystemBase {
     leftConfig.inverted(false);
 
     rightConfig.inverted(true);
+    
 
     leftMotor.configure(leftConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
     rightMotor.configure(rightConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);

@@ -4,28 +4,24 @@
 
 package frc.robot.commands;
 
-import java.util.function.DoubleSupplier;
-
+import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.RobotContainer;
 
+/** An example command that uses an example subsystem. */
+public class ExampleCommand extends Command {
+  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+  private final ExampleSubsystem m_subsystem;
 
-/* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class DriveManually extends Command {
-
-  
-  private DoubleSupplier joystickX;
-  private DoubleSupplier joystickY;
-  
-  /** Creates a new DriveManually. */
-  public DriveManually(DoubleSupplier X , DoubleSupplier Y) {
+  /**
+   * Creates a new ExampleCommand.
+   *
+   * @param subsystem The subsystem used by this command.
+   */
+  public ExampleCommand(ExampleSubsystem subsystem) {
+    m_subsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.motorSubsystem);
-    joystickX = X;
-    joystickY = Y;
+    addRequirements(subsystem);
   }
-
-
 
   // Called when the command is initially scheduled.
   @Override
@@ -33,12 +29,7 @@ public class DriveManually extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    double xValue = joystickX.getAsDouble();
-    double yValue = joystickY.getAsDouble();
-    RobotContainer.motorSubsystem.drive(xValue, yValue);
-
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override

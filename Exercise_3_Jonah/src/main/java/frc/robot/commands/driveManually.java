@@ -9,11 +9,10 @@ import frc.robot.RobotContainer;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class driveManually extends Command {
-  /** Creates a new validClassname. */
+  /** Creates a new driveManually. */
   public driveManually() {
     // Use addRequirements() here to declare subsystem dependencies.
-   addRequirements(RobotContainer.driveSubsystem);
-   
+    addRequirements(RobotContainer.driveSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -23,12 +22,11 @@ public class driveManually extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double x = -RobotContainer.joystick.getY(); // Invert Y axis
-    double y = RobotContainer.joystick.getX();
-    RobotContainer.driveSubsystem.drive(x, y);
+    double z = RobotContainer.joystick.getZ();
+    double y = RobotContainer.joystick.getY();
+    RobotContainer.driveSubsystem.drive(y, z);
   }
-
-  // Called once the command ends or is interrupted.
+    // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
 

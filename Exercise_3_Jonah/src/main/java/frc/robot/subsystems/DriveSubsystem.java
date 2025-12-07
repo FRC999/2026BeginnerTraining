@@ -10,10 +10,7 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.RobotContainer;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.motorcontrol.Spark;
 
 public class DriveSubsystem extends SubsystemBase {
 
@@ -32,12 +29,16 @@ public DriveSubsystem() {
  rightMotor.configure(rightConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     chassis = new DifferentialDrive(leftMotor, rightMotor);
  }
-public void drive (double x, double y) {
-    chassis.arcadeDrive(x, y);
-}
+ public void drive(double y, double z){
+   chassis.arcadeDrive(y, z);
+ } 
+
 
 @Override
 public void periodic() {
   // This method will be called once per scheduler run
 }
 }
+
+
+

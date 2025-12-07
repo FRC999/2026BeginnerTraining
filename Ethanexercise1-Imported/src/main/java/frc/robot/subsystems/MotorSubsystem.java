@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
-import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
@@ -21,18 +20,19 @@ public class MotorSubsystem extends SubsystemBase {
     m_leadMotor=new SparkMax(54, MotorType.kBrushless);
     m_followMotor = new SparkMax(57, MotorType.kBrushless);
     configureMotor();
+    
   }
   private void configureMotor() {
     var leadConfig = new SparkMaxConfig();
     var followConfig = new SparkMaxConfig();
     m_leadMotor.configure(leadConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     followConfig.follow(m_leadMotor);
-    m_followMotor.configure(followConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-
-  }
+  m_followMotor.configure(followConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+ }
   public void startMotor()
   {
     m_leadMotor.set(0.5);
+    
   }
   public void stopMotor()
   {

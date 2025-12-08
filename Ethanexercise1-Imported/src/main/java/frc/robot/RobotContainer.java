@@ -1,4 +1,4 @@
-0000000000000000000000000000000000000000// Copyright (c) FIRST and other WPILib contributors.
+// Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
@@ -6,13 +6,16 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
-import frc.robot.commands.driveManually;
-import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.subsystems.MotorSubsystem;
+import frc.robot.commands.StartMotor;
+import frc.robot.commands.StopMotor;
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -20,19 +23,22 @@ import edu.wpi.first.wpilibj.Joystick;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
+  public static final MotorSubsystem m_MotorSubsystem = new MotorSubsystem();
   // The robot's subsystems and commands are defined here...
+  Joystick playerJoystick = new Joystick(0); // 0 is the USB Port to be used as indicated on the Driver Station
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  public static DriveSubsystem driveSubsystem = new DriveSubsystem();
-  public static final Joystick joystick = new Joystick(0);
+  
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
-      
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    //final MotorSubsystem m_MotorSubsystem= new MotorSubsystem();
     // Configure the trigger bindings
+    
     configureBindings();
-    driveSubsystem.setDefaultCommand(new driveManually());
+    
   }
 
   /**
@@ -46,14 +52,16 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-   // new Trigger(m_exampleSubsystem::exampleCondition)
-      //  .onTrue(new ExampleCommand());
-
+    new Trigger(m_exampleSubsystem::exampleCondition)
+        .onTrue(new ExampleCommand(m_exampleSubsystem));
+    
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-  }
-
+    JoystickButton button1 = new JoystickButton(playerJoystick, 1); // Creates a new JoystickButton object for button 1 on exampleStick
+    button1.whileTrue(new StartMotor());
+    button1.whileFalse(new StopMotor());
+    }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -64,5 +72,4 @@ public class RobotContainer {
     // An example command will be run in autonomous
     return Autos.exampleAuto(m_exampleSubsystem);
   }
-
 }

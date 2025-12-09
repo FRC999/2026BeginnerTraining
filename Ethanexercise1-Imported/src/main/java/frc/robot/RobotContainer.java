@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.MotorSubsystem;
 import frc.robot.commands.StartMotor;
+import frc.robot.commands.StopMotor;
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -33,7 +34,7 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    final MotorSubsystem m_MotorSubsystem= new MotorSubsystem();
+    //final MotorSubsystem m_MotorSubsystem= new MotorSubsystem();
     // Configure the trigger bindings
     
     configureBindings();
@@ -59,6 +60,7 @@ public class RobotContainer {
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
     JoystickButton button1 = new JoystickButton(playerJoystick, 1); // Creates a new JoystickButton object for button 1 on exampleStick
     button1.whileTrue(new StartMotor());
+    button1.whileFalse(new StopMotor());
     }
 
   /**

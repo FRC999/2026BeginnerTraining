@@ -16,6 +16,7 @@ import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 
 import com.ctre.phoenix6.swerve.SwerveRequest;
+import com.ctre.phoenix6.swerve.SwerveRequest.FieldCentric;
 
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Subsystem;
@@ -25,7 +26,7 @@ public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder>
   /** Creates a new DriveSubsystem. */
   Pigeon2 imu;
 
-    private final com.ctre.phoenix6.swerve.SwerveRequest.FieldCentric drive = new com.ctre.phoenix6.swerve.SwerveRequest.FieldCentric()
+    private final FieldCentric drive = new FieldCentric()
             .withDeadband(SwerveConstants.MaxSpeed * SwerveConstants.DeadbandRatioLinear)
             .withRotationalDeadband(SwerveConstants.MaxAngularRate * SwerveConstants.DeadbandRatioAngular)
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Will not check if got to location

@@ -6,11 +6,9 @@ package frc.robot.commands;
 
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
-<<<<<<<< HEAD:Swerve_Jeffrey-2/src/main/java/frc/robot/commands/ExampleCommand.java
 
 /** An example command that uses an example subsystem. */
 public class ExampleCommand extends Command {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final ExampleSubsystem m_subsystem;
 
   /**
@@ -22,24 +20,11 @@ public class ExampleCommand extends Command {
     m_subsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
-========
-import frc.robot.RobotContainer;
-import frc.robot.subsystems.MotorSubsystem;
-
-/* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class StartMotor extends Command {
-  /** Creates a new StartMotor. */
-  public StartMotor() {
-    // Use addRequirements() here to declare subsystem dependencies.
-    
->>>>>>>> cbd2737229f6e9385a847fd572651f7c0e8f6825:Oktay-Exercise 6/src/main/java/frc/robot/commands/StartMotor.java
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override

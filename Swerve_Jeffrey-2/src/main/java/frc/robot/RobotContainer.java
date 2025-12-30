@@ -6,7 +6,6 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
-<<<<<<<< HEAD:Swerve_Jeffrey-2/src/main/java/frc/robot/RobotContainer.java
 import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveSubsystem;
@@ -17,12 +16,10 @@ import java.lang.ModuleLayer.Controller;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-========
+
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.MotorSubsystem;
 import edu.wpi.first.wpilibj.DigitalInput;
->>>>>>>> cbd2737229f6e9385a847fd572651f7c0e8f6825:Oktay-Exercise 6/src/main/java/frc/robot/RobotContainer.java
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -36,30 +33,21 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-<<<<<<<< HEAD:Swerve_Jeffrey-2/src/main/java/frc/robot/RobotContainer.java
 
   public static final DriveSubsystem driveSubsystem = DriveSubsystem.driveTrain();  
-========
-  public MotorSubsystem motorSubsystem = new MotorSubsystem();
->>>>>>>> cbd2737229f6e9385a847fd572651f7c0e8f6825:Oktay-Exercise 6/src/main/java/frc/robot/RobotContainer.java
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
-<<<<<<<< HEAD:Swerve_Jeffrey-2/src/main/java/frc/robot/RobotContainer.java
   // Creating an xbox controller for swerveDriveTrain
   public static Controller xboxDriveController;
 
   public static boolean isAllianceRed = false;
 
-
-========
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
->>>>>>>> cbd2737229f6e9385a847fd572651f7c0e8f6825:Oktay-Exercise 6/src/main/java/frc/robot/RobotContainer.java
   public RobotContainer() {
     configureBindings();
-<<<<<<<< HEAD:Swerve_Jeffrey-2/src/main/java/frc/robot/RobotContainer.java
     driveSubsystem.setDefaultCommand(
       new DriveManuallyCommand(
           () -> getDriverXAxis(),
@@ -72,7 +60,7 @@ public class RobotContainer {
   public void checkIfAllianceIsRed() {
     var alliance = DriverStation.getAlliance();
     isAllianceRed = alliance.get() == DriverStation.Alliance.Red;
-  }
+    }
 
      // Driver preferred controls
      private double getDriverXAxis() {
@@ -90,11 +78,6 @@ public class RobotContainer {
       //return -xboxDriveController.getLeftStickX();
       return -m_driverController.getRightX();
     }
-========
-  }
-
-  DigitalInput limitSwitch = new DigitalInput(7);
->>>>>>>> cbd2737229f6e9385a847fd572651f7c0e8f6825:Oktay-Exercise 6/src/main/java/frc/robot/RobotContainer.java
 
 
   /**
@@ -110,28 +93,12 @@ public class RobotContainer {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
-<<<<<<<< HEAD:Swerve_Jeffrey-2/src/main/java/frc/robot/RobotContainer.java
-========
-
-    System.out.println(limitSwitch.get());
-      
-
-
-
->>>>>>>> cbd2737229f6e9385a847fd572651f7c0e8f6825:Oktay-Exercise 6/src/main/java/frc/robot/RobotContainer.java
-
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
   }
 
-<<<<<<<< HEAD:Swerve_Jeffrey-2/src/main/java/frc/robot/RobotContainer.java
-========
-   
-
-
->>>>>>>> cbd2737229f6e9385a847fd572651f7c0e8f6825:Oktay-Exercise 6/src/main/java/frc/robot/RobotContainer.java
-  /**
+/**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
@@ -140,8 +107,4 @@ public class RobotContainer {
     // An example command will be run in autonomous
     return Autos.exampleAuto(m_exampleSubsystem);
   }
-<<<<<<<< HEAD:Swerve_Jeffrey-2/src/main/java/frc/robot/RobotContainer.java
 }
-========
-}
->>>>>>>> cbd2737229f6e9385a847fd572651f7c0e8f6825:Oktay-Exercise 6/src/main/java/frc/robot/RobotContainer.java

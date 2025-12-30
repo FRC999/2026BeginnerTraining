@@ -8,10 +8,14 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.StopMotorPPCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 
 import java.lang.ModuleLayer.Controller;
+
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
@@ -19,9 +23,12 @@ import edu.wpi.first.wpilibj.XboxController;
 
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
@@ -42,6 +49,8 @@ public class RobotContainer {
 
   // Creating an xbox controller for swerveDriveTrain
   public static Controller xboxDriveController;
+
+  public static Joystick joystick = new Joystick(0);
 
   public static boolean isAllianceRed = false;
 
@@ -79,6 +88,31 @@ public class RobotContainer {
       return -m_driverController.getRightX();
     }
 
+    public static Command runTrajectoryPathPlannerWithForceResetOfStartingPoseWithVision(String tr,
+      boolean shouldResetOdometryToStartingPose, boolean flipTrajectory) {
+    try {
+      // Load the path you want to follow using its name in the GUI
+      PathPlannerPath path = PathPlannerPath.fromPathFile(tr);
+
+      if (flipTrajectory) {
+        path = path.flipPath();
+      }
+      Pose2d startPose = path.getStartingHolonomicPose().get();
+      driveSubsystem.setOdometryPoseToSpecificPose(startPose); // reset odometry, as PP may not do so
+
+      // Create a path following command using AutoBuilder. This will also trigger
+      // event markers.
+      if (! shouldResetOdometryToStartingPose) {
+        return AutoBuilder.followPath(path);
+      } else { // reset odometry the right way
+        return Commands.sequence(AutoBuilder.resetOdom(startPose), AutoBuilder.followPath(path));
+      }
+    } catch (Exception e) {
+      DriverStation.reportError("Big oops: " + e.getMessage(), e.getStackTrace());
+      return Commands.none();
+    }
+  }
+
 
   /**
    * Use this method to define your trigger->command mappings. Triggers can be created via the
@@ -89,10 +123,15 @@ public class RobotContainer {
    * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
    * joysticks}.
    */
-  private void configureBindings() {
+    private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
+
+    new JoystickButton(joystick, 1)
+      .onTrue(runTrajectoryPathPlannerWithForceResetOfStartingPoseWithVision("One Meter Forward", true, false))
+      .onFalse(new StopMotorPPCommand());
+
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());

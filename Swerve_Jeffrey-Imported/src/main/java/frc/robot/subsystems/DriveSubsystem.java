@@ -18,6 +18,7 @@ import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.ctre.phoenix6.swerve.SwerveRequest.FieldCentric;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants.SwerveConstants;
@@ -93,7 +94,19 @@ public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder>
     );
     // previousOmegaRotationCommand = omega_rad_per_s / SwerveChassis.MaxAngularRate;
   }
+
+  public void stopDrive() {
+    this.setControl(
+      drive.withVelocityX(0)
+      .withVelocityY(0)
+      .withRotationalRate(0)
+    );
+  }
   
+  public void setOdometryPoseToSpecificPose(Pose2d p) {
+    this.resetPose(p);
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

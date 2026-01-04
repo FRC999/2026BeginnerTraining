@@ -4,27 +4,14 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
-/** An example command that uses an example subsystem. */
-public class ExampleCommand extends Command {
-<<<<<<<< HEAD:Swerve_Jeffrey-Imported/src/main/java/frc/robot/commands/ExampleCommand.java
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-========
-  @SuppressWarnings("PMD.UnusedPrivateField")
->>>>>>>> cbd2737229f6e9385a847fd572651f7c0e8f6825:Exercise_4_Jonah/src/main/java/frc/robot/commands/ExampleCommand.java
-  private final ExampleSubsystem m_subsystem;
-
-  /**
-   * Creates a new ExampleCommand.
-   *
-   * @param subsystem The subsystem used by this command.
-   */
-  public ExampleCommand(ExampleSubsystem subsystem) {
-    m_subsystem = subsystem;
+/* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
+public class DriveManually extends Command {
+  /** Creates a new DriveManually. */
+  public DriveManually() {
+    //addRequirements();
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.

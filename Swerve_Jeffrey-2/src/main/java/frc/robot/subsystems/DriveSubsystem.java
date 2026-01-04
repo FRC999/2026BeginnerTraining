@@ -18,6 +18,8 @@ import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.ctre.phoenix6.swerve.SwerveRequest.FieldCentric;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants.SwerveConstants;
@@ -48,7 +50,7 @@ public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder>
         SwerveConstants.MOD1.driveMotorID(),
         SwerveConstants.MOD1.cancoderID(), 
         Rotations.of(SwerveConstants.MOD1.angleOffset()), 
-        Inches.of(10.335), Inches.of(10.335), 
+        Inches.of(10.335), Inches.of(-10.335), 
         SwerveConstants.MOD1.driveMotorInverted(),
         SwerveConstants.MOD1.angleMotorInverted(),
         SwerveConstants.MOD1.cancoderInverted()),
@@ -57,7 +59,7 @@ public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder>
         SwerveConstants.MOD2.driveMotorID(),
         SwerveConstants.MOD2.cancoderID(), 
         Rotations.of(SwerveConstants.MOD2.angleOffset()), 
-        Inches.of(10.335), Inches.of(10.335), 
+        Inches.of(-10.335), Inches.of(10.335), 
         SwerveConstants.MOD2.driveMotorInverted(),
         SwerveConstants.MOD2.angleMotorInverted(),
         SwerveConstants.MOD2.cancoderInverted()), 
@@ -66,7 +68,7 @@ public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder>
         SwerveConstants.MOD3.driveMotorID(),
         SwerveConstants.MOD3.cancoderID(), 
         Rotations.of(SwerveConstants.MOD3.angleOffset()), 
-        Inches.of(10.335), Inches.of(10.335), 
+        Inches.of(-10.335), Inches.of(-10.335), 
         SwerveConstants.MOD3.driveMotorInverted(),
         SwerveConstants.MOD3.angleMotorInverted(),
         SwerveConstants.MOD3.cancoderInverted()));
@@ -85,13 +87,25 @@ public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder>
   // Completely no idea what this does, someone pls help review
   public void drive(double xVelocity_m_per_s, double yVelocity_m_per_s, double omega_rad_per_s) {
     //System.out.println("X: " + xVelocity_m_per_s + " y: " + yVelocity_m_per_s + " o:" + omega_rad_per_s/SwerveChassis.MaxAngularRate);
-    //SmartDashboard.putString("Manual Drive Command Velocities","X: " + xVelocity_m_per_s + " y: " + yVelocity_m_per_s + " o:" + omega_rad_per_s);
+    SmartDashboard.putString("Manual Drive Command Velocities","X: " + xVelocity_m_per_s + " y: " + yVelocity_m_per_s + " o:" + omega_rad_per_s);
     this.setControl(
       drive.withVelocityX(xVelocity_m_per_s)
         .withVelocityY(yVelocity_m_per_s)
         .withRotationalRate(omega_rad_per_s)
     );
     // previousOmegaRotationCommand = omega_rad_per_s / SwerveChassis.MaxAngularRate;
+  }
+
+  public void stopDrive() {
+    this.setControl(
+      drive.withVelocityX(0)
+      .withVelocityY(0)
+      .withRotationalRate(0)
+    );
+  }
+  
+  public void setOdometryPoseToSpecificPose(Pose2d p) {
+    this.resetPose(p);
   }
   
   @Override

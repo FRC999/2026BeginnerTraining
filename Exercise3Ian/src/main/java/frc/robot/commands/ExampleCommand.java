@@ -9,11 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 /** An example command that uses an example subsystem. */
 public class ExampleCommand extends Command {
-<<<<<<<< HEAD:Swerve_Jeffrey-Imported/src/main/java/frc/robot/commands/ExampleCommand.java
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-========
-  @SuppressWarnings("PMD.UnusedPrivateField")
->>>>>>>> cbd2737229f6e9385a847fd572651f7c0e8f6825:Exercise_4_Jonah/src/main/java/frc/robot/commands/ExampleCommand.java
   private final ExampleSubsystem m_subsystem;
 
   /**

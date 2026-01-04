@@ -4,7 +4,25 @@
 
 package frc.robot.commands;
 
+import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+<<<<<<<< HEAD:Swerve_Jeffrey-2/src/main/java/frc/robot/commands/ExampleCommand.java
+
+/** An example command that uses an example subsystem. */
+public class ExampleCommand extends Command {
+  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+  private final ExampleSubsystem m_subsystem;
+
+  /**
+   * Creates a new ExampleCommand.
+   *
+   * @param subsystem The subsystem used by this command.
+   */
+  public ExampleCommand(ExampleSubsystem subsystem) {
+    m_subsystem = subsystem;
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(subsystem);
+========
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.MotorSubsystem;
 
@@ -14,6 +32,7 @@ public class StartMotor extends Command {
   public StartMotor() {
     // Use addRequirements() here to declare subsystem dependencies.
     
+>>>>>>>> cbd2737229f6e9385a847fd572651f7c0e8f6825:Oktay-Exercise 6/src/main/java/frc/robot/commands/StartMotor.java
   }
 
   // Called when the command is initially scheduled.

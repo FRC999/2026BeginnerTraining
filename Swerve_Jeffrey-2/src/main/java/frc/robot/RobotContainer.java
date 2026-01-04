@@ -15,18 +15,16 @@ import frc.robot.subsystems.ExampleSubsystem;
 import java.lang.ModuleLayer.Controller;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -56,6 +54,7 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    driveSubsystem.configureAutoBuilder();
     configureBindings();
     driveSubsystem.setDefaultCommand(
       new DriveManuallyCommand(
@@ -66,9 +65,9 @@ public class RobotContainer {
 
 
 
-  public void checkIfAllianceIsRed() {
-    var alliance = DriverStation.getAlliance();
-    isAllianceRed = alliance.get() == DriverStation.Alliance.Red;
+    public void checkIfAllianceIsRed() {
+      var alliance = DriverStation.getAlliance();
+      isAllianceRed = alliance.get() == DriverStation.Alliance.Red;
     }
 
      // Driver preferred controls
@@ -88,9 +87,12 @@ public class RobotContainer {
       return -m_driverController.getRightX();
     }
 
+
     public static Command runTrajectoryPathPlannerWithForceResetOfStartingPoseWithVision(String tr,
-      boolean shouldResetOdometryToStartingPose, boolean flipTrajectory) {
+    boolean shouldResetOdometryToStartingPose, boolean flipTrajectory) {
+       System.out.println("in onTrue");
     try {
+      System.out.println("Running trajectory 1m forward method");
       // Load the path you want to follow using its name in the GUI
       PathPlannerPath path = PathPlannerPath.fromPathFile(tr);
 
@@ -103,9 +105,10 @@ public class RobotContainer {
       // Create a path following command using AutoBuilder. This will also trigger
       // event markers.
       if (! shouldResetOdometryToStartingPose) {
-        return AutoBuilder.followPath(path);
+        //return AutoBuilder.followPath(path);
+        return new PrintCommand("test1");
       } else { // reset odometry the right way
-        return Commands.sequence(AutoBuilder.resetOdom(startPose), AutoBuilder.followPath(path));
+        return Commands.sequence(new PrintCommand("test"), AutoBuilder.resetOdom(startPose), AutoBuilder.followPath(path));
       }
     } catch (Exception e) {
       DriverStation.reportError("Big oops: " + e.getMessage(), e.getStackTrace());
@@ -113,6 +116,7 @@ public class RobotContainer {
     }
   }
 
+  
 
   /**
    * Use this method to define your trigger->command mappings. Triggers can be created via the
@@ -125,12 +129,23 @@ public class RobotContainer {
    */
     private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
+
+    System.out.println("configured buttons");
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
 
     new JoystickButton(joystick, 1)
       .onTrue(runTrajectoryPathPlannerWithForceResetOfStartingPoseWithVision("One Meter Forward", true, false))
+      // .onTrue(new PrintCommand("test"))
       .onFalse(new StopMotorPPCommand());
+
+    new JoystickButton(joystick, 8)
+      .onTrue(new PrintCommand("button pressed"))
+      .onFalse(new PrintCommand("button letted go"));
+    
+    new JoystickButton(joystick, 7)
+      .whileTrue(new PrintCommand("button held"))
+      .onFalse(new PrintCommand("button released"));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.

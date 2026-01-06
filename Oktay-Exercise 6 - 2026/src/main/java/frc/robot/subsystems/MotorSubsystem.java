@@ -4,8 +4,8 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.servohub.ServoHub.ResetMode;
 import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkMaxConfig;
@@ -33,9 +33,23 @@ public class MotorSubsystem extends SubsystemBase {
     motorConfig.follow(m_followMotor, true);
 
 
-    //.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
-    
+    m_leadMotor.configure(motorConfig, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+
   }
+
+  public void startMotor() {
+  m_leadMotor.set(-0.3);
+  
+}
+
+
+public void stopMotor() {
+  m_leadMotor.set(0);
+
+}
+
+
+
 
   @Override
   public void periodic() {

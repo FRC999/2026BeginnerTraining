@@ -18,7 +18,7 @@ public class IMUsubsystem extends SubsystemBase {
   TalonSRX _talon2 = new TalonSRX(4);
   PigeonIMU _pigeon = new PigeonIMU(_talon2);
 
-
+  AHRS navX = new AHRS(NavXComType.kMXP_SPI);
 
   @Override
   public void periodic() {
@@ -27,11 +27,16 @@ public class IMUsubsystem extends SubsystemBase {
    double[] ypr = new double[3];
      _pigeon.getYawPitchRoll(ypr);
      System.out.println("Yaw" + ypr[0] + "Pitch" + ypr[1] + "Roll" + ypr[2]);    
+     System.out.println("navX Yaw"+ navX.getYaw() + "navX Pitch" + navX.getPitch() + "navX Roll" + navX.getRoll());
+     
      SmartDashboard.putNumber("Pigeon Yaw", ypr[0]);
      SmartDashboard.putNumber("Pigeon Pitch", ypr[1]);
      SmartDashboard.putNumber("Pigeon Roll", ypr[2]);
-     
     
+     SmartDashboard.putNumber("navX Yaw", navX.getYaw());
+     SmartDashboard.putNumber("navX Pitch", navX.getPitch());
+     SmartDashboard.putNumber("navX Roll", navX.getRoll());
+
     }
     
 }

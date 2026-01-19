@@ -7,7 +7,6 @@ package frc.robot.subsystems;
 import static edu.wpi.first.units.Units.Inches;
 import static edu.wpi.first.units.Units.Rotations;
 
-import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -18,7 +17,6 @@ import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Subsystem;
-import frc.robot.Constants;
 import frc.robot.Constants.SwerveConstants;
 
 public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> implements Subsystem {
@@ -82,13 +80,13 @@ public class DriveSubsystem extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder>
   }
 
   public void drive(double xVelocity_mps, double yVelocity_mps, double omega_rps){
-    // this.setControl(
-    //   driveChassis.withVelocityX(xVelocity_mps)
-    //     .withVelocityY(yVelocity_mps)
-    //     .withRotationalRate(omega_rps));
+     this.setControl(
+       driveChassis.withVelocityX(xVelocity_mps)
+         .withVelocityY(yVelocity_mps)
+         .withRotationalRate(omega_rps));
     System.out.print("X velocity: " + xVelocity_mps);
-    System.out.print("Y velocity: " + yVelocity_mps);
-    System.out.println("Angular velocity: " + omega_rps);
+    System.out.print("  Y velocity: " + yVelocity_mps);
+    System.out.println("  Angular velocity: " + omega_rps);
   } 
 
   @Override
